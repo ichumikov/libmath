@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.5)
 project(libmath LANGUAGES CXX)
 
 add_library(libmath STATIC
-    src/math.cpp
+    src/libmath.cpp
 )
 
 target_include_directories(libmath
