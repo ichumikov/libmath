@@ -12,6 +12,7 @@
 
 
 namespace math
+{
 
 int addition(int a, int b, int& out)
 {
