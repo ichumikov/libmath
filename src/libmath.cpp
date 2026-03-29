@@ -74,14 +74,25 @@ int factorial(int n, int& out)
     {
         return -2;
     }
-    out = 1;
-    for (int i = 2; i <= n; ++i)
+
+    if (n <= 1)
     {
-        if (__builtin_mul_overflow(out, i, &out))
-        {
-            return -3;
-        }
+        out = 1;
+        return 0;
     }
+
+    int prev = 0;
+    int rc = factorial(n - 1, prev);
+    if (rc != 0)
+    {
+        return rc;
+    }
+
+    if (__builtin_mul_overflow(prev, n, &out))
+    {
+        return -3;
+    }
+
     return 0;
 }
 } 
