@@ -1,98 +1,80 @@
 #include "libmath.h"
-
+#include <stdexcept>
 #include <climits>
-
-
-//errors:
-//0 -success
-//-1 - division by zero
-//-2 - factorial by negative number
-//-3 - overflow
-//-4 - negative power
-
 
 namespace math
 {
 
-int addition(int a, int b, int& out)
+int addition(int a, int b)
 {
+    int out{};
     if (__builtin_add_overflow(a, b, &out))
     {
-        return -3;
+        throw std::overflow_error("integer overflow");
     }
-    return 0;
+    return out;
 }
-int subtraction(int a, int b, int& out)
+
+int subtraction(int a, int b)
 {
+    int out{};
     if (__builtin_sub_overflow(a, b, &out))
     {
-        return -3;
+        throw std::overflow_error("integer overflow");
     }
-    return 0;
+    return out;
 }
-int multiplication(int a, int b, int& out)
+
+int multiplication(int a, int b)
 {
+    int out{};
     if (__builtin_mul_overflow(a, b, &out))
     {
-        return -3;
+        throw std::overflow_error("integer overflow");
     }
-    return 0;
+    return out;
 }
-int division(int a, int b, int& out)
+
+int division(int a, int b)
 {
     if (b == 0)
     {
-        return -1;
+        throw std::domain_error("division by zero");
     }
-    // The only overflowing signed int division case.
     if (a == INT_MIN && b == -1)
     {
-        return -3;
+        throw std::overflow_error("integer overflow");
     }
-    out = a / b;
-    return 0;
+    return a / b;
 }
-int power(int a, int b, int& out)
+int power(int a, int b)
 {
+    int out{};
     if (b < 0)
     {
-        return -4;
+        throw std::domain_error("negative power");
     }
     out = 1;
     for (int i = 0; i < b; ++i)
     {
         if (__builtin_mul_overflow(out, a, &out))
         {
-            return -3;
+            throw std::overflow_error("integer overflow");
         }
     }
-    return 0;
+    return out;
 }
-int factorial(int n, int& out)
+int factorial(int n)
 {
     if (n < 0)
-    {
-        return -2;
-    }
-
+        throw std::domain_error("negative factorial");
     if (n <= 1)
-    {
-        out = 1;
-        return 0;
-    }
+        return 1;
 
-    int prev = 0;
-    int rc = factorial(n - 1, prev);
-    if (rc != 0)
-    {
-        return rc;
-    }
-
+    int prev = factorial(n - 1);
+    int out{};
     if (__builtin_mul_overflow(prev, n, &out))
-    {
-        return -3;
-    }
-
-    return 0;
+        throw std::overflow_error("integer overflow");
+    return out;
 }
 } 

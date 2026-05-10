@@ -2,11 +2,11 @@
 
 namespace math
 {
-int addition(int a, int b, int& out);
-int subtraction(int a, int b, int& out);
-int multiplication(int a, int b, int& out);
-int division(int a, int b, int& out);
-int power(int a, int b, int& out);
-int factorial(int n, int& out);
+int addition(int a, int b);
+int subtraction(int a, int b);
+int multiplication(int a, int b);
+int division(int a, int b);
+int power(int a, int b);
+int factorial(int n);
 }
 
